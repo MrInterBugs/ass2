@@ -1,5 +1,4 @@
-import java.util.Scanner;
-import java.util.Arrays;
+import java.util.Scanner; //Used to get the user input and to then process it.
 
 class ConvexHull {
 
@@ -30,6 +29,23 @@ class ConvexHull {
 		}
 		return(numPoints);
 	}
+
+	static boolean checkDuplicates(int pointCount, double xVal[], double yVal[]) {
+		for (int i=pointCount; i>=1; i--) {
+			for (int j=0; j<i; j++) {
+				if(xVal[i] == xVal[j] && i != j && yVal[i] == yVal[j]) {
+					System.out.println("There is a matching pair, the pair is: (" + xVal[i] + "," + yVal[i] + ") and (" + xVal[j] + "," + yVal[j] + ")");
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	static void computeConvexHull(int pointCount, double xVal[], double yVal[]) {
+
+	}
+
 	public static void main(String[] args) {
 		int maxPoints = 70;
                 double xVal[] = new double[maxPoints];
@@ -41,5 +57,13 @@ class ConvexHull {
 		for(int i = 0; i < pointCount; i++) {
 			System.out.println("(" + xVal[i] + "," + yVal[i] + ")");
 		}
+
+		if (checkDuplicates(pointCount, xVal, yVal)) {
+			System.exit(0);
+		} else {
+			System.out.println("There are no duplicates.");
+		}
+
+		//computeConvexHull(pointCount, xVal, yVal);
 	}
 }
