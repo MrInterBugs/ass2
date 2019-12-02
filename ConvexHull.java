@@ -45,24 +45,23 @@ class ConvexHull {
 
 	static void computeConvexHull(int pointCount, double xVal[], double yVal[]) {
 		double m, c;
-		print("computeConvexHull");
 		for (int i=0; i < pointCount-1; i++) {
 		        for (int j=i+1; j< pointCount; j++) {
 							int above = 0, below = 0;
-							print("computeConvexHull");
-							m = (yVal[j]]-yVal[i])/(xVal[j]-xVal[i]);
+							m = (yVal[j]-yVal[i])/(xVal[j]-xVal[i]);
 							if (m == Double.POSITIVE_INFINITY || m == Double.NEGATIVE_INFINITY) {
-								print("NEGATIVE_INFINITY");
-								if (z != i & z != j) {
-									if (xVal[z] < xVal[i]) {
-										below++;
-									} if (xVal[z] < xVal[i]) {
-										below++;
+								for (int z = 0; z < pointCount; z++) {
+									if (z != i & z != j) {
+										if (xVal[z] < xVal[i]) {
+											below++;
+										} if (xVal[z] < xVal[i]) {
+											below++;
+										}
 									}
 								}
 							} else {
 								c = yVal[i] - m*xVal[i];
-								for(z = 0; z < pointCount; z++) {
+								for(int z = 0; z < pointCount; z++) {
 									if (yVal[z] < (m *  xVal[z]) + c) {
 										below++;
 									} if (yVal[z] > (m *  xVal[z]) + c) {
@@ -75,6 +74,7 @@ class ConvexHull {
 							}
 						}
 				}
+			}
 
 	public static void main(String[] args) {
 		int maxPoints = 70;
