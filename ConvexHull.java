@@ -14,8 +14,10 @@ class ConvexHull {
                 int i = 0; int numPoints = 0;
                 boolean first = true;
                 double current = 0.0;
+
                 while (numlist.hasNextDouble() && ((current = numlist.nextDouble()) >= 0) && (i+numPoints) < (2*maxPoints)) {
-                        if (first) {
+
+												if (first) {
                                 xVal[i] = current;
                                 first = false;
                                 i++;
@@ -25,69 +27,106 @@ class ConvexHull {
                                 numPoints++;
                         }
                 }
+
 		if ((i+numPoints) == (2*maxPoints)) {
 			System.out.println("You have reached the limit of points!");
 		}
+
 		return(numPoints);
 	}
 
 	static boolean checkDuplicates(int pointCount, double xVal[], double yVal[]) {
 		for (int i=pointCount-1; i>=1; i--) {
 			for (int j=0; j<i; j++) {
+
 				if(xVal[i] == xVal[j] && i != j && yVal[i] == yVal[j]) {
 					System.out.println("There is a matching pair, the pair is: (" + xVal[i] + "," + yVal[i] + ") and (" + xVal[j] + "," + yVal[j] + ")");
+					System.out.println("This program will not run with matching pairs, please fix your input.");
 					return true;
 				}
 			}
 		}
+
 		return false;
 	}
 
-	static void computeConvexHull(int pointCount, double xVal[], double yVal[]) {
+	static double[][] computeConvexHull(int pointCount, double xVal[], double yVal[]) {
+
 		double m, c;
+		int count = 0;
+		double[][] coordinates = new double[(pointCount*2)][2];
+
 		for (int i=0; i < pointCount-1; i++) {
+
 			double[] pI = new double[2];
 			pI[0] = xVal[i];
 			pI[1] = yVal[i];
+			boolean hull = false;
+
 	  	for (int j=i+1; j< pointCount; j++) {
+
 				double[] pJ = new double[2];
 				pJ[0] = xVal[j];
 				pJ[1] = yVal[j];
 				int above = 0, below = 0;
+
 				m = (pJ[1]-pI[1])/(pJ[0]-pI[0]);
+				c = pI[1] - m*pI[0];
+
 				if (m == Double.POSITIVE_INFINITY || m == Double.NEGATIVE_INFINITY) {
 					for (int z = 0; z < pointCount; z++) {
-						if (z != i & z != j) {
-							if (xVal[z] < pI[0]) {
+
+						if (z != i & z != j && xVal[z] < pI[0]) {
+							below++;
+						} else if (z != i & z != j && xVal[z] > pI[0]) {
+							above++;
+						}
+					}
+
+				} else {
+						for(int z = 0; z < pointCount; z++) {
+							if (z != i & z != j && yVal[z] < (m *  xVal[z] + c)) {
 								below++;
-							} if (xVal[z] > pI[0]) {
+							} else if (z != i & z != j && yVal[z] > (m *  xVal[z]) + c) {
 								above++;
 							}
 						}
 					}
-					} else {
-						c = pI[1] - m*pI[0];
-						for(int z = 0; z < pointCount; z++) {
-							if (z != i & z != j) {
-								if (yVal[z] < (m *  xVal[z]) + c) {
-									below++;
-								} if (yVal[z] > (m *  xVal[z]) + c) {
-									above++;
-								}
-							}
-						}
+
+					if ((above == 0|| below == 0)) {
+						hull = true;
+						printCords(pJ[0], pJ[1], pI[0], pI[1]);
+						printLineEqation(m, c, pI[0]);
 					}
-					if (above == 0|| below == 0) {
-						System.out.println("(" + pI[0] + "," + pI[1] + ") to " + "(" + pJ[0] + "," + pJ[1] + ") is on the convex hull!");
-					}
+
 				}
+				//if (hull) {
+				//	printCords(pI[0], pI[1]);
+				//}
 			}
+
+			return coordinates;
 		}
 
+	static void printCords(double x2, double y2, double x1, double y1) {
+		System.out.println("The point (" + x1 + "," + y1 + ") to (" + x2 + "," + y2 + ") is a point on the Convex Hull!");
+	}
+
+	static void printLineEqation(double m, double c, double x) {
+		if (m == Double.POSITIVE_INFINITY || m == Double.NEGATIVE_INFINITY) {
+			System.out.println("With the equation: x = " + x+ "\n");
+		} else if (m == 0) {
+			System.out.println("With the equation: y = " + c + "\n");
+		} else {
+			System.out.println("With the equation: y = " + m + "x + " + c + "\n");
+		}
+	}
+
 	public static void main(String[] args) {
+
 		int maxPoints = 70;
-                double xVal[] = new double[maxPoints];
-                double yVal[] = new double[maxPoints];
+    double xVal[] = new double[maxPoints];
+    double yVal[] = new double[maxPoints];
 
 		int pointCount = loadPoints(maxPoints, xVal, yVal);
 		System.out.println("The pointCount value is: " + pointCount + ".");
