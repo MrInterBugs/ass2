@@ -1,5 +1,4 @@
 import java.util.Scanner; //Used to get the user input and to then process it.
-import java.util.Arrays;
 
 class ConvexHull {
 
@@ -61,7 +60,6 @@ class ConvexHull {
 			double[] pI = new double[2];
 			pI[0] = xVal[i];
 			pI[1] = yVal[i];
-			boolean hull = false;
 
 	  	for (int j=i+1; j< pointCount; j++) {
 
@@ -94,15 +92,11 @@ class ConvexHull {
 					}
 
 					if ((above == 0|| below == 0)) {
-						hull = true;
 						printCords(pJ[0], pJ[1], pI[0], pI[1]);
 						printLineEqation(m, c, pI[0]);
 					}
 
 				}
-				//if (hull) {
-				//	printCords(pI[0], pI[1]);
-				//}
 			}
 
 			return coordinates;
@@ -114,27 +108,11 @@ class ConvexHull {
 
 	static void printLineEqation(double m, double c, double x) {
 		if (m == Double.POSITIVE_INFINITY || m == Double.NEGATIVE_INFINITY) {
-			System.out.println("With the equation: x = " + x+ "\n");
+			System.out.println("With the line connecting them being: x = " + x+ "\n");
 		} else if (m == 0) {
-			System.out.println("With the equation: y = " + c + "\n");
+			System.out.println("With the line connecting them being: y = " + c + "\n");
 		} else {
-			System.out.println("With the equation: y = " + m + "x + " + c + "\n");
+			System.out.println("With the line connecting them being: y = " + m + "x + " + c + "\n");
 		}
-	}
-
-	public static void main(String[] args) {
-
-		int maxPoints = 70;
-    double xVal[] = new double[maxPoints];
-    double yVal[] = new double[maxPoints];
-
-		int pointCount = loadPoints(maxPoints, xVal, yVal);
-		System.out.println("The pointCount value is: " + pointCount + ".");
-
-		if (checkDuplicates(pointCount, xVal, yVal)) {
-			System.exit(0);
-		}
-
-		computeConvexHull(pointCount, xVal, yVal);
 	}
 }
