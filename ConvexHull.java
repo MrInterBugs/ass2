@@ -46,35 +46,43 @@ class ConvexHull {
 	static void computeConvexHull(int pointCount, double xVal[], double yVal[]) {
 		double m, c;
 		for (int i=0; i < pointCount-1; i++) {
-		        for (int j=i+1; j< pointCount; j++) {
-							int above = 0, below = 0;
-							m = (yVal[j]-yVal[i])/(xVal[j]-xVal[i]);
-							if (m == Double.POSITIVE_INFINITY || m == Double.NEGATIVE_INFINITY) {
-								for (int z = 0; z < pointCount; z++) {
-									if (z != i & z != j) {
-										if (xVal[z] < xVal[i]) {
-											below++;
-										} if (xVal[z] < xVal[i]) {
-											below++;
-										}
-									}
-								}
-							} else {
-								c = yVal[i] - m*xVal[i];
-								for(int z = 0; z < pointCount; z++) {
-									if (yVal[z] < (m *  xVal[z]) + c) {
-										below++;
-									} if (yVal[z] > (m *  xVal[z]) + c) {
-										above++;
-									}
-								}
-							}
-							if (above == 0 || below == 0) {
-								System.out.println("(" + i + "," + j + ") is on the convex hull!");
+			double[] pI = new double[2];
+			pI[0] = xVal[i];
+			pI[1] = yVal[i];
+	  	for (int j=i+1; j< pointCount; j++) {
+				double[] pJ = new double[2];
+				pJ[0] = xVal[j];
+				pJ[1] = yVal[j];
+				int above = 0, below = 0;
+				m = (pJ[1]-pI[1])/(pJ[0]-pI[0]);
+				if (m == Double.POSITIVE_INFINITY || m == Double.NEGATIVE_INFINITY) {
+					for (int z = 0; z < pointCount; z++) {
+						if (z != i & z != j) {
+							if (xVal[z] < pI[0]) {
+								below++;
+							} if (xVal[z] > pI[0]) {
+								above++;
 							}
 						}
+					}
+					} else {
+						c = pI[1] - m*pI[0];
+						for(int z = 0; z < pointCount; z++) {
+							if (z != i & z != j) {
+								if (yVal[z] < (m *  xVal[z]) + c) {
+									below++;
+								} if (yVal[z] > (m *  xVal[z]) + c) {
+									above++;
+								}
+							}
+						}
+					}
+					if (above == 0|| below == 0) {
+						System.out.println("(" + pI[0] + "," + pI[1] + ") to " + "(" + pJ[0] + "," + pJ[1] + ") is on the convex hull!");
+					}
 				}
 			}
+		}
 
 	public static void main(String[] args) {
 		int maxPoints = 70;
@@ -84,14 +92,8 @@ class ConvexHull {
 		int pointCount = loadPoints(maxPoints, xVal, yVal);
 		System.out.println("The pointCount value is: " + pointCount + ".");
 
-		for(int i = 0; i < pointCount; i++) {
-			System.out.println("(" + xVal[i] + "," + yVal[i] + ")");
-		}
-
 		if (checkDuplicates(pointCount, xVal, yVal)) {
 			System.exit(0);
-		} else {
-			System.out.println("There are no duplicates.");
 		}
 
 		computeConvexHull(pointCount, xVal, yVal);
