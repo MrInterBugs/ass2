@@ -2,7 +2,11 @@
 
 INSTRUCTIONS
 
-Fill in towards the end
+To compile and run the Graph.java using javafx the commands are:
+
+  javac --module-path /usr/share/openjfx/lib/ --add-modules javafx.controls ConvexHull.java
+
+  java --module-path /usr/share/openjfx/lib/ --add-modules javafx.controls ConvexHull
 
 CRITERIA
 
