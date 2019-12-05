@@ -1,6 +1,20 @@
 import java.util.Scanner; //Used to get the user input and to then process it.
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 class ConvexHull {
+
+	private static int counter;
+
+	static void addOne() {
+		counter++;
+	}
+
+	static int returnCount() {
+		return counter;
+	}
 
 	static int loadPoints(int maxPoints, double[] xVal, double[] yVal) {
 
@@ -49,11 +63,11 @@ class ConvexHull {
 		return false;
 	}
 
-	static double[][] computeConvexHull(int pointCount, double xVal[], double yVal[]) {
+	static Set<String> computeConvexHull(int pointCount, double xVal[], double yVal[]) {
 
 		double m, c;
-		int count = 0;
-		double[][] coordinates = new double[(pointCount*2)][2];
+		Set<String> cords = new HashSet<String>();
+		int arraycount = 0;
 
 		for (int i=0; i < pointCount-1; i++) {
 
@@ -92,14 +106,18 @@ class ConvexHull {
 					}
 
 					if ((above == 0|| below == 0)) {
-						printCords(pJ[0], pJ[1], pI[0], pI[1]);
-						printLineEqation(m, c, pI[0]);
+						printCords(pJ[0], pJ[1], pI[0], pI[1]); //These were used just to make the code cleaner and easier to read.
+						printLineEqation(m, c, pI[0]); //These were used just to make the code cleaner and easier to read.
+						cords.add(pJ[0] + "," + pJ[1]);
+						arraycount++;
+						cords.add(pI[0] + "," + pI[1]);
+						arraycount++;
 					}
 
 				}
 			}
-
-			return coordinates;
+			System.out.println("There are " + returnCount() + " unique points that make up to convex hull.");
+			return cords;
 		}
 
 	static void printCords(double x2, double y2, double x1, double y1) {
@@ -109,10 +127,33 @@ class ConvexHull {
 	static void printLineEqation(double m, double c, double x) {
 		if (m == Double.POSITIVE_INFINITY || m == Double.NEGATIVE_INFINITY) {
 			System.out.println("With the line connecting them being: x = " + x+ "\n");
+			addOne();
 		} else if (m == 0) {
 			System.out.println("With the line connecting them being: y = " + c + "\n");
+			addOne();
 		} else {
 			System.out.println("With the line connecting them being: y = " + m + "x + " + c + "\n");
+			addOne();
 		}
+	}
+
+	static double maxX (int pointCount, double[] xVal) {
+		double max = 0;
+		for (int i=0; i < pointCount; i++) {
+			if (xVal[i] > max) {
+				max = xVal[i];
+			}
+		}
+		return max;
+	}
+
+	static double maxY (int pointCount, double[] yVal) {
+		double max = 0;
+		for (int i=0; i < pointCount; i++) {
+			if (yVal[i] > max) {
+				max = yVal[i];
+			}
+		}
+		return max;
 	}
 }
