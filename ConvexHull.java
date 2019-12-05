@@ -1,19 +1,34 @@
 import java.util.Scanner; //Used to get the user input and to then process it.
 import java.io.FileWriter;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 class ConvexHull {
 
-	private static int counter;
+	public static void main(String[] args) {
+		int maxPoints = 70;
+    double xVal[] = new double[maxPoints];
+    double yVal[] = new double[maxPoints];
 
-	static void addOne() {
-		counter++;
-	}
+		int pointCount = ConvexHull.loadPoints(maxPoints, xVal, yVal);
 
-	static int returnCount() {
-		return counter;
+    if (ConvexHull.checkDuplicates(pointCount, xVal, yVal)) {
+			System.exit(0);
+		}
+
+    Set<String> cords = ConvexHull.computeConvexHull(pointCount, xVal, yVal);
+    String[] values = new String[cords.size()];
+    cords.toArray(values);
+
+		for (int i = 0; i < values.length; i++) {
+			String tempcords = values[i];
+			String[] cordsarray = tempcords.split(",");
+			double[] doubleCords = Arrays.stream(cordsarray).mapToDouble(Double::parseDouble).toArray();
+			System.out.println(Arrays.toString(doubleCords));
+
+		}
 	}
 
 	static int loadPoints(int maxPoints, double[] xVal, double[] yVal) {
@@ -116,7 +131,6 @@ class ConvexHull {
 
 				}
 			}
-			System.out.println("There are " + returnCount() + " unique points that make up to convex hull.");
 			return cords;
 		}
 
@@ -127,13 +141,10 @@ class ConvexHull {
 	static void printLineEqation(double m, double c, double x) {
 		if (m == Double.POSITIVE_INFINITY || m == Double.NEGATIVE_INFINITY) {
 			System.out.println("With the line connecting them being: x = " + x+ "\n");
-			addOne();
 		} else if (m == 0) {
 			System.out.println("With the line connecting them being: y = " + c + "\n");
-			addOne();
 		} else {
 			System.out.println("With the line connecting them being: y = " + m + "x + " + c + "\n");
-			addOne();
 		}
 	}
 
