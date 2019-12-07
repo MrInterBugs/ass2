@@ -1,35 +1,11 @@
 import java.util.Scanner; //Used to get the user input and to then process it.
-import java.io.FileWriter;
+
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-class ConvexHull {
-
-	public static void main(String[] args) {
-		int maxPoints = 70;
-    double xVal[] = new double[maxPoints];
-    double yVal[] = new double[maxPoints];
-
-		int pointCount = ConvexHull.loadPoints(maxPoints, xVal, yVal);
-
-    if (ConvexHull.checkDuplicates(pointCount, xVal, yVal)) {
-			System.exit(0);
-		}
-
-    Set<String> cords = ConvexHull.computeConvexHull(pointCount, xVal, yVal);
-    String[] values = new String[cords.size()];
-    cords.toArray(values);
-
-		for (int i = 0; i < values.length; i++) {
-			String tempcords = values[i];
-			String[] cordsarray = tempcords.split(",");
-			double[] doubleCords = Arrays.stream(cordsarray).mapToDouble(Double::parseDouble).toArray();
-			System.out.println(Arrays.toString(doubleCords));
-
-		}
-	}
+public class ConvexHull {
 
 	static int loadPoints(int maxPoints, double[] xVal, double[] yVal) {
 
