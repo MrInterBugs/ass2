@@ -1,12 +1,17 @@
 import java.util.Scanner; //Used to get the user input and to then process it.
 
+/*
+* These were imported as due to an unknown amount of convex hull points being made I wanted to be able add them to a list imiditatly.
+*/
 import java.util.Arrays;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.List;
 
 public class ConvexHull {
+
+	/*
+	* Method to get the user inputed coordinates and add them to the xVal and Yval list.
+	*/
 
 	static int loadPoints(int maxPoints, double[] xVal, double[] yVal) {
 
@@ -40,6 +45,10 @@ public class ConvexHull {
 		return(numPoints);
 	}
 
+	/*
+	* Method to check the user input had no duplicate coordinates.
+	*/
+
 	static boolean checkDuplicates(int pointCount, double xVal[], double yVal[]) {
 		for (int i=pointCount-1; i>=1; i--) {
 			for (int j=0; j<i; j++) {
@@ -54,6 +63,10 @@ public class ConvexHull {
 
 		return false;
 	}
+
+	/*
+	* Method to get the convex hull points from the list of coordinates.
+	*/
 
 	static List<String> computeConvexHull(int pointCount, double xVal[], double yVal[]) {
 
@@ -79,8 +92,7 @@ public class ConvexHull {
 
 				if (m == Double.POSITIVE_INFINITY || m == Double.NEGATIVE_INFINITY) {
 					for (int z = 0; z < pointCount; z++) {
-
-						if (z != i & z != j && xVal[z] < pI[0]) {
+						if (z != i && z != j && xVal[z] < pI[0]) {
 							below++;
 						} else if (z != i & z != j && xVal[z] > pI[0]) {
 							above++;
@@ -89,7 +101,7 @@ public class ConvexHull {
 
 				} else {
 						for(int z = 0; z < pointCount; z++) {
-							if (z != i & z != j && yVal[z] < (m *  xVal[z] + c)) {
+							if (z != i && z != j && yVal[z] < (m *  xVal[z] + c)) {
 								below++;
 							} else if (z != i & z != j && yVal[z] > (m *  xVal[z]) + c) {
 								above++;
@@ -97,7 +109,7 @@ public class ConvexHull {
 						}
 					}
 
-					if ((above == 0|| below == 0)) {
+					if ((above == 0 || below == 0)) {
 						printCords(pJ[0], pJ[1], pI[0], pI[1]); //These were used just to make the code cleaner and easier to read.
 						printLineEqation(m, c, pI[0]); //These were used just to make the code cleaner and easier to read.
 						cords.add(pJ[0] + "," + pJ[1]);
@@ -111,10 +123,17 @@ public class ConvexHull {
 			return cords;
 		}
 
+
+	/*
+	* Method to output which points go to which on the convex hull.
+	*/
 	static void printCords(double x2, double y2, double x1, double y1) {
 		System.out.println("\nThe point (" + x1 + "," + y1 + ") to (" + x2 + "," + y2 + ") is a point on the Convex Hull!");
 	}
 
+	/*
+	* Method to print the equation off the line on the convex hull.
+	*/
 	static void printLineEqation(double m, double c, double x) {
 		if (m == Double.POSITIVE_INFINITY || m == Double.NEGATIVE_INFINITY) {
 			System.out.println("With the line connecting them being: x = " + x);
@@ -123,25 +142,5 @@ public class ConvexHull {
 		} else {
 			System.out.println("With the line connecting them being: y = " + m + "x + " + c);
 		}
-	}
-
-	static double maxX (int pointCount, double[] xVal) {
-		double max = 0;
-		for (int i=0; i < pointCount; i++) {
-			if (xVal[i] > max) {
-				max = xVal[i];
-			}
-		}
-		return max;
-	}
-
-	static double maxY (int pointCount, double[] yVal) {
-		double max = 0;
-		for (int i=0; i < pointCount; i++) {
-			if (yVal[i] > max) {
-				max = yVal[i];
-			}
-		}
-		return max;
 	}
 }

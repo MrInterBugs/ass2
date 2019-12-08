@@ -7,8 +7,6 @@ import javafx.stage.Stage;
 
 import java.util.Arrays;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.List;
 
 public class Ass2 extends Application {
@@ -17,8 +15,6 @@ public class Ass2 extends Application {
   private static int pointCount;
   private static double xVal[] = new double[maxPoints];
   private static double yVal[] = new double[maxPoints];
-  private static double maxX = 0;
-  private static double maxY = 0;
 
   @Override
    public void start(Stage stage) throws Exception {
@@ -30,16 +26,13 @@ public class Ass2 extends Application {
  		double[] yCord = new double[cords.size()];
 
  		for (int i = 0; i < values.length; i++) {
+
+      /*
+      * I know this is not the best code but i could not think of another way to do it,
+      */
  			String tempcords = values[i];
  			String[] cordsarray = tempcords.split(",");
  			double[] doubleCords = Arrays.stream(cordsarray).mapToDouble(Double::parseDouble).toArray(); //https://stackoverflow.com/questions/9101301/how-to-convert-string-array-to-double-array-in-one-line
-
- 			if (maxX < doubleCords[0]) {
- 				maxX = doubleCords[0];
- 			}
- 			if (maxY < doubleCords[1]) {
- 				maxY = doubleCords[1];
- 			}
 
  			xCord[i] = doubleCords[0];
  			yCord[i] = doubleCords[1];
