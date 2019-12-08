@@ -23,7 +23,7 @@ public class Ass2 extends Application {
   @Override
    public void start(Stage stage) throws Exception {
 
-    Set<String> cords = ConvexHull.computeConvexHull(pointCount, xVal, yVal);
+    List<String> cords = ConvexHull.computeConvexHull(pointCount, xVal, yVal);
  		String[] values = new String[cords.size()];
  		cords.toArray(values);
  		double[] xCord = new double[cords.size()];
@@ -43,26 +43,9 @@ public class Ass2 extends Application {
 
  			xCord[i] = doubleCords[0];
  			yCord[i] = doubleCords[1];
- 		}
- 		/*if (maxX < 10 && maxY < 10) {
- 			for (int i = 0; i < values.length; i++) {
- 				xCord[i] = xCord[i] * 150;
- 				yCord[i] = yCord[i] * 150;
- 			}
- 		} else if (maxX < 100 && maxY < 100) {
- 			for (int i = 0; i < values.length; i++) {
- 				xCord[i] = xCord[i] * 15;
- 				yCord[i] = yCord[i] * 15;
- 			}
- 		} else if (maxX < 500 && maxY < 500) {
- 			for (int i = 0; i < values.length; i++) {
- 				xCord[i] = xCord[i] * 2.5;
- 				yCord[i] = yCord[i] * 2.5;
- 			}
- 		} */
 
- 		System.out.println(Arrays.toString(xCord));
- 		System.out.println(Arrays.toString(yCord));
+ 		}
+
     stage.setTitle("Aedan Lawrence");
 
     final NumberAxis x = new NumberAxis();
@@ -76,10 +59,12 @@ public class Ass2 extends Application {
     series1.setName("Convex Hull Points");
 
     XYChart.Series series2 = new XYChart.Series();
-    series2.setName("Other Points");
+    series2.setName("Path of the Hedgehog");
 
     for (int i = 0; i < xVal.length; i++) {
-      series2.getData().add(new XYChart.Data(xVal[i], yVal[i]));
+      if (! (xVal[i] == 0 && yVal[i] == 0)) {
+        series2.getData().add(new XYChart.Data(xVal[i], yVal[i]));
+      }
     }
 
     for (int i = 0; i < xCord.length; i++) {

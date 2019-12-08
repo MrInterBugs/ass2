@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.List;
 
 public class ConvexHull {
 
@@ -54,10 +55,10 @@ public class ConvexHull {
 		return false;
 	}
 
-	static Set<String> computeConvexHull(int pointCount, double xVal[], double yVal[]) {
+	static List<String> computeConvexHull(int pointCount, double xVal[], double yVal[]) {
 
 		double m, c;
-		Set<String> cords = new HashSet<String>();
+		List<String> cords = new ArrayList<String>();
 		int arraycount = 0;
 
 		for (int i=0; i < pointCount-1; i++) {
@@ -111,16 +112,16 @@ public class ConvexHull {
 		}
 
 	static void printCords(double x2, double y2, double x1, double y1) {
-		System.out.println("The point (" + x1 + "," + y1 + ") to (" + x2 + "," + y2 + ") is a point on the Convex Hull!");
+		System.out.println("\nThe point (" + x1 + "," + y1 + ") to (" + x2 + "," + y2 + ") is a point on the Convex Hull!");
 	}
 
 	static void printLineEqation(double m, double c, double x) {
 		if (m == Double.POSITIVE_INFINITY || m == Double.NEGATIVE_INFINITY) {
-			System.out.println("With the line connecting them being: x = " + x+ "\n");
+			System.out.println("With the line connecting them being: x = " + x);
 		} else if (m == 0) {
-			System.out.println("With the line connecting them being: y = " + c + "\n");
+			System.out.println("With the line connecting them being: y = " + c);
 		} else {
-			System.out.println("With the line connecting them being: y = " + m + "x + " + c + "\n");
+			System.out.println("With the line connecting them being: y = " + m + "x + " + c);
 		}
 	}
 
