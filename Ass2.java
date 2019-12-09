@@ -1,3 +1,6 @@
+/*
+* Line chart needs these to work..
+*/
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
@@ -5,6 +8,9 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
 
+/*
+* These were imported as due to an unknown amount of convex hull points being made I wanted to be able add them to a list imiditatly.
+*/
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +22,11 @@ public class Ass2 extends Application {
   private static double xVal[] = new double[maxPoints];
   private static double yVal[] = new double[maxPoints];
 
-  @Override
+
+   /*
+   * Method to display the grapical output. Using a line scatter + scatter chart combo.
+   */
+   @Override
    public void start(Stage stage) throws Exception {
 
     List<String> cords = ConvexHull.computeConvexHull(pointCount, xVal, yVal);
@@ -75,6 +85,10 @@ public class Ass2 extends Application {
     stage.show();
 	 }
 
+
+   /*
+   * Start of the program used to get user inputs.
+   */
    public static void main(String[] args) {
 
  		 pointCount = ConvexHull.loadPoints(maxPoints, xVal, yVal);
