@@ -1,5 +1,6 @@
 /*
-* Line chart needs these to work..
+* Line chart needs these to work...
+* My general base for this came from https://docs.oracle.com/javafx/2/charts/line-chart.htm
 */
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -29,6 +30,9 @@ public class Ass2 extends Application {
    @Override
    public void start(Stage stage) throws Exception {
 
+    /*
+    * Fixing the data from computeConvexHull to usable x and y cords.
+    */
     List<String> cords = ConvexHull.computeConvexHull(pointCount, xVal, yVal);
  		String[] values = new String[cords.size()];
  		cords.toArray(values);
@@ -69,7 +73,7 @@ public class Ass2 extends Application {
       }
     }
     lineChart.getData().add(series);
-    lineChart.lookup(".default-color0.chart-series-line").setStyle("-fx-opacity: 0;");
+    lineChart.lookup(".default-color0.chart-series-line").setStyle("-fx-opacity: 0;"); //https://stackoverflow.com/questions/47947447/javafx-css-linechart
 
     for (int i = 0; i<xCord.length; i++) {
       XYChart.Series series1 = new XYChart.Series();

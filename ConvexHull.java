@@ -72,19 +72,19 @@ public class ConvexHull {
 
 		double m, c;
 		List<String> cords = new ArrayList<String>();
-		int arraycount = 0;
 
-		for (int i=0; i < pointCount-1; i++) {
+		for (int i = 0; i < pointCount - 1; i++) {
 
 			double[] pI = new double[2];
 			pI[0] = xVal[i];
 			pI[1] = yVal[i];
 
-	  	for (int j=i+1; j< pointCount; j++) {
+	  	for (int j = i + 1; j < pointCount; j++) {
 
 				double[] pJ = new double[2];
 				pJ[0] = xVal[j];
 				pJ[1] = yVal[j];
+
 				int above = 0, below = 0;
 
 				m = (pJ[1]-pI[1])/(pJ[0]-pI[0]);
@@ -92,18 +92,18 @@ public class ConvexHull {
 
 				if (m == Double.POSITIVE_INFINITY || m == Double.NEGATIVE_INFINITY) {
 					for (int z = 0; z < pointCount; z++) {
-						if (z != i && z != j && xVal[z] < pI[0]) {
+						if (z != i && z != j && xVal[z] < pI[0]) { //Without "z != i & z != j" small errors seem to occour.
 							below++;
-						} else if (z != i & z != j && xVal[z] > pI[0]) {
+						} else if (z != i & z != j && xVal[z] > pI[0]) { //Without "z != i & z != j" small errors seem to occour.
 							above++;
 						}
 					}
 
 				} else {
 						for(int z = 0; z < pointCount; z++) {
-							if (z != i && z != j && yVal[z] < (m *  xVal[z] + c)) {
+							if (z != i && z != j && yVal[z] < (m *  xVal[z] + c)) { //Without "z != i & z != j" small errors seem to occour.
 								below++;
-							} else if (z != i & z != j && yVal[z] > (m *  xVal[z]) + c) {
+							} else if (z != i & z != j && yVal[z] > (m *  xVal[z]) + c) { //Without "z != i & z != j" small errors seem to occour.
 								above++;
 							}
 						}
@@ -113,9 +113,7 @@ public class ConvexHull {
 						printCords(pJ[0], pJ[1], pI[0], pI[1]); //These were used just to make the code cleaner and easier to read.
 						printLineEqation(m, c, pI[0]); //These were used just to make the code cleaner and easier to read.
 						cords.add(pI[0] + "," + pI[1]);
-						arraycount++;
 						cords.add(pJ[0] + "," + pJ[1]);
-						arraycount++;
 					}
 
 				}
