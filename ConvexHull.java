@@ -112,9 +112,9 @@ public class ConvexHull {
 					if ((above == 0 || below == 0)) {
 						printCords(pJ[0], pJ[1], pI[0], pI[1]); //These were used just to make the code cleaner and easier to read.
 						printLineEqation(m, c, pI[0]); //These were used just to make the code cleaner and easier to read.
-						cords.add(pJ[0] + "," + pJ[1]);
-						arraycount++;
 						cords.add(pI[0] + "," + pI[1]);
+						arraycount++;
+						cords.add(pJ[0] + "," + pJ[1]);
 						arraycount++;
 					}
 

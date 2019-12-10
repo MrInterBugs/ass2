@@ -58,28 +58,32 @@ public class Ass2 extends Application {
     final LineChart<Number,Number> lineChart = new LineChart<Number,Number>(x,y);
 		stage.show();
     lineChart.setTitle("Convex Hull");
-    XYChart.Series series1 = new XYChart.Series();
-    series1.setName("Convex Hull Points");
 
-    XYChart.Series series2 = new XYChart.Series();
-    series2.setName("Path of the Hedgehog");
+    XYChart.Series series = new XYChart.Series();
+
+    List<XYChart.Series> SeriesList = new ArrayList<XYChart.Series>();
 
     for (int i = 0; i < xVal.length; i++) {
       if (! (xVal[i] == 0 && yVal[i] == 0)) {
-        series2.getData().add(new XYChart.Data(xVal[i], yVal[i]));
+        series.getData().add(new XYChart.Data(xVal[i], yVal[i]));
       }
     }
+    lineChart.getData().add(series);
+    lineChart.lookup(".default-color0.chart-series-line").setStyle("-fx-opacity: 0;");
 
-    for (int i = 0; i < xCord.length; i++) {
-       series1.getData().add(new XYChart.Data(xCord[i], yCord[i]));
+    for (int i = 0; i<xCord.length; i++) {
+      XYChart.Series series1 = new XYChart.Series();
+      series1.getData().add(new XYChart.Data(xCord[i], yCord[i]));
+      series1.getData().add(new XYChart.Data(xCord[(i+1)], yCord[(i+1)]));
+      SeriesList.add(series1);
+      i++;
     }
-
 
     Scene scene  = new Scene(lineChart,1920,1080);
 
-    lineChart.getData().addAll(series2, series1);
-
-    scene.getStylesheets().add(getClass().getResource("root.css").toExternalForm()); https://stackoverflow.com/questions/26803380/how-to-combine-scatter-chart-with-line-chart-to-show-line-of-regression-javafx
+    for (int i = 0; i<SeriesList.size(); i++) {
+      lineChart.getData().add(SeriesList.get(i));
+    }
 
     stage.setScene(scene);
     stage.show();
